@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CriarClienteUseCase } from '../../../core/application/usecases/cliente/criar-cliente';
 import { Cliente } from '../../../core/domain/cliente/cliente';
 import { ClienteDTO } from '../../../core/domain/cliente/dto/clienteDTO';
