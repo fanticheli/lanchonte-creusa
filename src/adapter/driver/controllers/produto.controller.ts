@@ -1,9 +1,20 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CriarProdutoDTO } from '../../../core/domain/produto/dto/criarProdutoDTO';
 import { ProdutoDTO } from '../../../core/domain/produto/dto/produtoDTO';
 import { CriarProdutoUseCase } from '../../../core/application/usecases/produto/criar-produto';
 import { BuscarProdutoPorDescricaoUseCase } from '../../../core/application/usecases/produto/buscar-produto-descricao';
 import { BuscarProdutoPorCategoriaUseCase } from '../../../core/application/usecases/produto/buscar-produto-categoria';
+import { EditarProdutoDTO } from '../../../core/domain/produto/dto/editarProdutoDTO';
+import { EditarProdutoUseCase } from '../../../core/application/usecases/produto/editar-produtos';
+import { DeletarProdutoUseCase } from '../../../core/application/usecases/produto/deletar-produto';
 
 @Controller('produtos')
 export class ProdutoController {
@@ -11,10 +22,12 @@ export class ProdutoController {
     private readonly criarProdutoUseCase: CriarProdutoUseCase,
     private readonly buscarProdutoPorDescricaoUseCase: BuscarProdutoPorDescricaoUseCase,
     private readonly buscarProdutoPorCategoriaUseCase: BuscarProdutoPorCategoriaUseCase,
+    private readonly editarProdutoUseCase: EditarProdutoUseCase,
+    private readonly deletarProdutoUseCase: DeletarProdutoUseCase,
   ) {}
 
   @Post()
-  async criarCliente(
+  async criarProduto(
     @Body() criarProdutoDTO: CriarProdutoDTO,
   ): Promise<ProdutoDTO> {
     return await this.criarProdutoUseCase.execute(criarProdutoDTO);
@@ -32,5 +45,17 @@ export class ProdutoController {
     @Param('categoria') categoria: string,
   ): Promise<ProdutoDTO[]> {
     return await this.buscarProdutoPorCategoriaUseCase.execute(categoria);
+  }
+
+  @Put()
+  async editarProduto(
+    @Body() editarProdutoDTO: EditarProdutoDTO,
+  ): Promise<ProdutoDTO> {
+    return await this.editarProdutoUseCase.execute(editarProdutoDTO);
+  }
+
+  @Delete(':id')
+  async deletarProduto(@Param() params) {
+    return this.deletarProdutoUseCase.execute(params.id);
   }
 }

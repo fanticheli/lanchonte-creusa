@@ -10,6 +10,8 @@ import { ProdutoRepositoryInMemory } from './adapter/driven/infra/produto.respos
 import { CriarProdutoUseCase } from './core/application/usecases/produto/criar-produto';
 import { BuscarProdutoPorDescricaoUseCase } from './core/application/usecases/produto/buscar-produto-descricao';
 import { BuscarProdutoPorCategoriaUseCase } from './core/application/usecases/produto/buscar-produto-categoria';
+import { EditarProdutoUseCase } from './core/application/usecases/produto/editar-produtos';
+import { DeletarProdutoUseCase } from './core/application/usecases/produto/deletar-produto';
 
 config();
 
@@ -20,6 +22,8 @@ const useCases = [
   CriarProdutoUseCase,
   BuscarProdutoPorDescricaoUseCase,
   BuscarProdutoPorCategoriaUseCase,
+  EditarProdutoUseCase,
+  DeletarProdutoUseCase,
 ];
 
 @Module({

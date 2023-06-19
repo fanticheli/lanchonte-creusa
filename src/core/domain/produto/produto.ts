@@ -1,12 +1,14 @@
 import { CategoriaEnum } from '../../../common/enum/categoria-enum';
 import { IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
 import { CriarProdutoDTO } from './dto/criarProdutoDTO';
+import { EditarProdutoDTO } from './dto/editarProdutoDTO';
 
 export class Produto {
-  constructor(criarProdutoDTO: CriarProdutoDTO) {
-    this.descricao = criarProdutoDTO.descricao;
-    this.valor = criarProdutoDTO.valor;
-    this.categoria = criarProdutoDTO.categoria;
+  constructor(produto: CriarProdutoDTO | EditarProdutoDTO) {
+    this.id = produto['id'];
+    this.descricao = produto.descricao;
+    this.valor = produto.valor;
+    this.categoria = produto.categoria;
   }
 
   id: string;
