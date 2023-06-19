@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { IProdutoRepository } from '../../../core/application/ports/produto/produto.repository';
 import { ProdutoDTO } from '../../../core/domain/produto/dto/produtoDTO';
 import { Produto } from '../../../core/domain/produto/produto';
-import { CriarProdutoDTO } from '../../../core/domain/produto/dto/criarProdutoDTO';
-import { EditarProdutoDTO } from '../../../core/domain/produto/dto/editarProdutoDTO';
+import { CriarProdutoDTO } from '../../../core/domain/produto/dto/criar-produtoDTO';
+import { EditarProdutoDTO } from '../../../core/domain/produto/dto/editar-produtoDTO';
 
 @Injectable()
 export class ProdutoRepositoryInMemory implements IProdutoRepository {
@@ -24,7 +24,6 @@ export class ProdutoRepositoryInMemory implements IProdutoRepository {
   }
 
   async buscarProdutoPorID(id: string): Promise<ProdutoDTO> {
-    console.log(this.produtos);
     return this.produtos.find((produto) => produto.id === id);
   }
 

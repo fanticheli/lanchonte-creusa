@@ -12,10 +12,18 @@ import { BuscarProdutoPorDescricaoUseCase } from './core/application/usecases/pr
 import { BuscarProdutoPorCategoriaUseCase } from './core/application/usecases/produto/buscar-produto-categoria';
 import { EditarProdutoUseCase } from './core/application/usecases/produto/editar-produtos';
 import { DeletarProdutoUseCase } from './core/application/usecases/produto/deletar-produto';
+import { CriarPedidoUseCase } from './core/application/usecases/pedido/criar-pedido';
+import { PedidoRepositoryInMemory } from './adapter/driven/infra/pedido.repository.memory';
+import { PedidoController } from './adapter/driver/controllers/pedido.controller';
+import { BuscarPedidosUseCase } from './core/application/usecases/pedido/buscar-pedidos';
 
 config();
 
-const repositories = [ClienteRepositoryInMemory, ProdutoRepositoryInMemory];
+const repositories = [
+  ClienteRepositoryInMemory,
+  ProdutoRepositoryInMemory,
+  PedidoRepositoryInMemory,
+];
 const useCases = [
   CriarClienteUseCase,
   BuscarClientePorCPFUseCase,
@@ -24,6 +32,8 @@ const useCases = [
   BuscarProdutoPorCategoriaUseCase,
   EditarProdutoUseCase,
   DeletarProdutoUseCase,
+  CriarPedidoUseCase,
+  BuscarPedidosUseCase,
 ];
 
 @Module({
@@ -33,7 +43,7 @@ const useCases = [
         'mongodb://localhost:27017/lanchonete-creusa-dev',
     ),
   ],
-  controllers: [ClienteController, ProdutoController],
+  controllers: [ClienteController, ProdutoController, PedidoController],
   providers: [...useCases, ...repositories],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 import { CategoriaEnum } from '../../../../common/enum/categoria-enum';
-import { CriarProdutoDTO } from '../../../domain/produto/dto/criarProdutoDTO';
-import { EditarProdutoDTO } from '../../../domain/produto/dto/editarProdutoDTO';
+import { CriarProdutoDTO } from '../../../domain/produto/dto/criar-produtoDTO';
+import { EditarProdutoDTO } from '../../../domain/produto/dto/editar-produtoDTO';
 import { ProdutoDTO } from '../../../domain/produto/dto/produtoDTO';
 
 export interface IProdutoRepository {

@@ -4,7 +4,7 @@ import { ProdutoRepositoryInMemory } from '../../../../adapter/driven/infra/prod
 import { BadRequestError } from '../../../../common/errors/types/bad-request';
 import { Produto } from '../../../domain/produto/produto';
 import { validate } from 'class-validator';
-import { EditarProdutoDTO } from '../../../domain/produto/dto/editarProdutoDTO';
+import { EditarProdutoDTO } from '../../../domain/produto/dto/editar-produtoDTO';
 
 @Injectable()
 export class EditarProdutoUseCase {
@@ -16,8 +16,6 @@ export class EditarProdutoUseCase {
     const produto = await this.produtoRepositoryInMemory.buscarProdutoPorID(
       editarProdutoDTO.id,
     );
-
-    console.log(produto);
 
     if (!produto) {
       throw new BadRequestError('Produto não encontrado');

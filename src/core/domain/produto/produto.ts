@@ -1,7 +1,7 @@
 import { CategoriaEnum } from '../../../common/enum/categoria-enum';
 import { IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
-import { CriarProdutoDTO } from './dto/criarProdutoDTO';
-import { EditarProdutoDTO } from './dto/editarProdutoDTO';
+import { CriarProdutoDTO } from './dto/criar-produtoDTO';
+import { EditarProdutoDTO } from './dto/editar-produtoDTO';
 
 export class Produto {
   constructor(produto: CriarProdutoDTO | EditarProdutoDTO) {

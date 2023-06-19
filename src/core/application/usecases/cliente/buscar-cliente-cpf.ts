@@ -8,7 +8,6 @@ export class BuscarClientePorCPFUseCase {
   constructor(private readonly clienteRepositiry: ClienteRepositoryInMemory) {}
 
   async execute(cpf: string): Promise<Cliente> {
-    console.log(cpf);
     const clienteExistente = await this.clienteRepositiry.buscarClientePorCPF(
       cpf,
     );

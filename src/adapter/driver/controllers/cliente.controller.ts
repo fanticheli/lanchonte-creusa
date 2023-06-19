@@ -4,7 +4,7 @@ import { Cliente } from '../../../core/domain/cliente/cliente';
 import { ClienteDTO } from '../../../core/domain/cliente/dto/clienteDTO';
 import { BuscarClientePorCPFUseCase } from '../../../core/application/usecases/cliente/buscar-cliente-cpf';
 
-@Controller('cliente')
+@Controller('clientes')
 export class ClienteController {
   constructor(
     private readonly criarClienteUsecase: CriarClienteUseCase,

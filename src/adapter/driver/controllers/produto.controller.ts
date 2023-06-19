@@ -7,12 +7,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CriarProdutoDTO } from '../../../core/domain/produto/dto/criarProdutoDTO';
+import { CriarProdutoDTO } from '../../../core/domain/produto/dto/criar-produtoDTO';
 import { ProdutoDTO } from '../../../core/domain/produto/dto/produtoDTO';
 import { CriarProdutoUseCase } from '../../../core/application/usecases/produto/criar-produto';
 import { BuscarProdutoPorDescricaoUseCase } from '../../../core/application/usecases/produto/buscar-produto-descricao';
 import { BuscarProdutoPorCategoriaUseCase } from '../../../core/application/usecases/produto/buscar-produto-categoria';
-import { EditarProdutoDTO } from '../../../core/domain/produto/dto/editarProdutoDTO';
+import { EditarProdutoDTO } from '../../../core/domain/produto/dto/editar-produtoDTO';
 import { EditarProdutoUseCase } from '../../../core/application/usecases/produto/editar-produtos';
 import { DeletarProdutoUseCase } from '../../../core/application/usecases/produto/deletar-produto';
 

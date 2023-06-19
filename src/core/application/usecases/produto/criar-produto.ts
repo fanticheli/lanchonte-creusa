@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProdutoDTO } from '../../../domain/produto/dto/produtoDTO';
-import { CriarProdutoDTO } from '../../../domain/produto/dto/criarProdutoDTO';
+import { CriarProdutoDTO } from '../../../domain/produto/dto/criar-produtoDTO';
 import { ProdutoRepositoryInMemory } from '../../../../adapter/driven/infra/produto.respository.memory';
 import { ConflictError } from '../../../../common/errors/types/conflict-error';
 import { BadRequestError } from '../../../../common/errors/types/bad-request';
