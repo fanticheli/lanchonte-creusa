@@ -1,15 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BadRequestError } from '../../../../common/errors/types/bad-request';
 import { validate } from 'class-validator';
 import { CriarPedidoDTO } from '../../../domain/pedido/dto/criar-pedidoDTO';
-import { PedidoRepositoryInMemory } from '../../../../adapter/driven/infra/pedido.repository.memory';
 import { Pedido } from '../../../domain/pedido/pedido';
 import { PedidoDTO } from '../../../domain/pedido/dto/pedidoDTO';
+import { IPedidoRepository } from '../../ports/pedido/pedido.repository';
+import { IProdutoRepository } from '../../ports/produto/produto.repository';
+import { StatusPagamentoEnum } from '../../../../common/enum/status-pagamento-enum';
+import { StatusPedidoEnum } from '../../../../common/enum/status-pedido-enum';
 
 @Injectable()
 export class CriarPedidoUseCase {
   constructor(
-    private readonly pedidoRepositoryInMemory: PedidoRepositoryInMemory,
+    @Inject('IPedidoRepository')
+    private readonly pedidoRepositoryInMemory: IPedidoRepository,
+    @Inject('IProdutoRepository')
+    private readonly produtoRepositoryInMemory: IProdutoRepository,
   ) {}
 
   async execute(criarPedidoDTO: CriarPedidoDTO): Promise<PedidoDTO> {
@@ -22,6 +28,20 @@ export class CriarPedidoUseCase {
         errosDeValidacao[0].constraints['isNotEmpty'];
       throw new BadRequestError(message);
     }
+
+    for (const produto of novoPedido.produtos) {
+      const produtoEncontrado =
+        await this.produtoRepositoryInMemory.buscarProdutoPorID(produto);
+
+      if (!produtoEncontrado) {
+        throw new BadRequestError(`Produto: ${produto} não encontrado`);
+      }
+
+      novoPedido.valorTotal += produtoEncontrado.valor;
+    }
+
+    novoPedido.statusPagamento = StatusPagamentoEnum.APROVADO;
+    novoPedido.statusPedido = StatusPedidoEnum.PREPARACAO;
 
     return this.pedidoRepositoryInMemory.criarPedido(novoPedido);
   }

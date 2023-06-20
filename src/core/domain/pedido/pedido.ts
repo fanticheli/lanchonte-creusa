@@ -1,5 +1,7 @@
 import { ArrayNotEmpty, IsNotEmpty } from 'class-validator';
 import { CriarPedidoDTO } from './dto/criar-pedidoDTO';
+import { StatusPagamentoEnum } from '../../../common/enum/status-pagamento-enum';
+import { StatusPedidoEnum } from '../../../common/enum/status-pedido-enum';
 
 export class Pedido {
   constructor(pedido: CriarPedidoDTO) {
@@ -18,4 +20,7 @@ export class Pedido {
 
   @IsNotEmpty({ message: 'O pedido deve conter um cliente' })
   cliente: string;
+
+  statusPagamento: StatusPagamentoEnum;
+  statusPedido: StatusPedidoEnum;
 }

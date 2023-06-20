@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ProdutoDTO } from '../../../domain/produto/dto/produtoDTO';
-import { ProdutoRepositoryInMemory } from '../../../../adapter/driven/infra/produto.respository.memory';
+import { IProdutoRepository } from '../../ports/produto/produto.repository';
 
 @Injectable()
 export class BuscarProdutoPorCategoriaUseCase {
   constructor(
-    private readonly produtoRepositoryInMemory: ProdutoRepositoryInMemory,
+    @Inject('IProdutoRepository')
+    private readonly produtoRepositoryInMemory: IProdutoRepository,
   ) {}
 
   async execute(categoria: string): Promise<ProdutoDTO[]> {

@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ProdutoDTO } from '../../../domain/produto/dto/produtoDTO';
-import { ProdutoRepositoryInMemory } from '../../../../adapter/driven/infra/produto.respository.memory';
 import { BadRequestError } from '../../../../common/errors/types/bad-request';
 import { Produto } from '../../../domain/produto/produto';
 import { validate } from 'class-validator';
 import { EditarProdutoDTO } from '../../../domain/produto/dto/editar-produtoDTO';
+import { IProdutoRepository } from '../../ports/produto/produto.repository';
 
 @Injectable()
 export class EditarProdutoUseCase {
   constructor(
-    private readonly produtoRepositoryInMemory: ProdutoRepositoryInMemory,
+    @Inject('IProdutoRepository')
+    private readonly produtoRepositoryInMemory: IProdutoRepository,
   ) {}
 
   async execute(editarProdutoDTO: EditarProdutoDTO): Promise<ProdutoDTO> {

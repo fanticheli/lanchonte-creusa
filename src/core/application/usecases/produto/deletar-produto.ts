@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { ProdutoRepositoryInMemory } from '../../../../adapter/driven/infra/produto.respository.memory';
+import { Inject, Injectable } from '@nestjs/common';
 import { BadRequestError } from '../../../../common/errors/types/bad-request';
+import { IProdutoRepository } from '../../ports/produto/produto.repository';
 
 @Injectable()
 export class DeletarProdutoUseCase {
   constructor(
-    private readonly produtoRepositoryInMemory: ProdutoRepositoryInMemory,
+    @Inject('IProdutoRepository')
+    private readonly produtoRepositoryInMemory: IProdutoRepository,
   ) {}
 
   execute(id: string): void {

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import { IProdutoRepository } from '../../../core/application/ports/produto/produto.repository';
-import { ProdutoDTO } from '../../../core/domain/produto/dto/produtoDTO';
-import { Produto } from '../../../core/domain/produto/produto';
-import { CriarProdutoDTO } from '../../../core/domain/produto/dto/criar-produtoDTO';
-import { EditarProdutoDTO } from '../../../core/domain/produto/dto/editar-produtoDTO';
+import { IProdutoRepository } from '../../../../core/application/ports/produto/produto.repository';
+import { ProdutoDTO } from '../../../../core/domain/produto/dto/produtoDTO';
+import { Produto } from '../../../../core/domain/produto/produto';
+import { CriarProdutoDTO } from '../../../../core/domain/produto/dto/criar-produtoDTO';
+import { EditarProdutoDTO } from '../../../../core/domain/produto/dto/editar-produtoDTO';
 
 @Injectable()
 export class ProdutoRepositoryInMemory implements IProdutoRepository {

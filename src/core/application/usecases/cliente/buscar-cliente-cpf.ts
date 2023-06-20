@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Cliente } from '../../../domain/cliente/cliente';
-import { ClienteRepositoryInMemory } from '../../../../adapter/driven/infra/cliente.repository.memory';
 import { BadRequestError } from '../../../../common/errors/types/bad-request';
+import { IClienteRepository } from '../../ports/cliente/cliente.repository';
 
 @Injectable()
 export class BuscarClientePorCPFUseCase {
-  constructor(private readonly clienteRepositiry: ClienteRepositoryInMemory) {}
+  constructor(
+    @Inject('IClienteRepository')
+    private readonly clienteRepositiry: IClienteRepository,
+  ) {}
 
   async execute(cpf: string): Promise<Cliente> {
     const clienteExistente = await this.clienteRepositiry.buscarClientePorCPF(

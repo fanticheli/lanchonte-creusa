@@ -3,4 +3,6 @@ export interface PedidoDTO {
   produtos: string[];
   valorTotal: number;
   cliente: string;
+  statusPagamento: string;
+  statusPedido: string;
 }
