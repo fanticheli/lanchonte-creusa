@@ -14,8 +14,10 @@ import { DeletarProdutoUseCase } from './core/application/usecases/produto/delet
 import { CriarPedidoUseCase } from './core/application/usecases/pedido/criar-pedido';
 import { PedidoController } from './adapter/driver/controllers/pedido.controller';
 import { BuscarPedidosUseCase } from './core/application/usecases/pedido/buscar-pedidos';
-import { ClienteRepositoryInMemory } from './adapter/driven/infra/memory/cliente.repository.memory';
 import { PedidoRepositoryInMemory } from './adapter/driven/infra/memory/pedido.repository.memory';
+import { ClienteRepositoryInMongo } from './adapter/driven/infra/mongo/repositories/cliente.repository.mongo';
+import { Cliente } from './core/domain/cliente/cliente';
+import { ClienteMongoSchema } from './adapter/driven/infra/mongo/model/cliente';
 
 config();
 
@@ -37,13 +39,16 @@ const useCases = [
       process.env.MONGO_URI ||
         'mongodb://localhost:27017/lanchonete-creusa-dev',
     ),
+    MongooseModule.forFeature([
+      { name: Cliente.name, schema: ClienteMongoSchema },
+    ]),
   ],
   controllers: [ClienteController, ProdutoController, PedidoController],
   providers: [
     ...useCases,
     {
       provide: 'IClienteRepository',
-      useClass: ClienteRepositoryInMemory,
+      useClass: ClienteRepositoryInMongo,
     },
     {
       provide: 'IPedidoRepository',
