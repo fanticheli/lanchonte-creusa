@@ -13,9 +13,9 @@ import { StatusPedidoEnum } from '../../../../common/enum/status-pedido-enum';
 export class CriarPedidoUseCase {
   constructor(
     @Inject('IPedidoRepository')
-    private readonly pedidoRepositoryInMemory: IPedidoRepository,
+    private readonly pedidoRepository: IPedidoRepository,
     @Inject('IProdutoRepository')
-    private readonly produtoRepositoryInMemory: IProdutoRepository,
+    private readonly produtoRepository: IProdutoRepository,
   ) {}
 
   async execute(criarPedidoDTO: CriarPedidoDTO): Promise<PedidoDTO> {
@@ -30,8 +30,9 @@ export class CriarPedidoUseCase {
     }
 
     for (const produto of novoPedido.produtos) {
-      const produtoEncontrado =
-        await this.produtoRepositoryInMemory.buscarProdutoPorID(produto);
+      const produtoEncontrado = await this.produtoRepository.buscarProdutoPorID(
+        produto,
+      );
 
       if (!produtoEncontrado) {
         throw new BadRequestError(`Produto: ${produto} não encontrado`);
@@ -43,6 +44,6 @@ export class CriarPedidoUseCase {
     novoPedido.statusPagamento = StatusPagamentoEnum.APROVADO;
     novoPedido.statusPedido = StatusPedidoEnum.PREPARACAO;
 
-    return this.pedidoRepositoryInMemory.criarPedido(novoPedido);
+    return this.pedidoRepository.criarPedido(novoPedido);
   }
 }

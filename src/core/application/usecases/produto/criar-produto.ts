@@ -11,14 +11,13 @@ import { IProdutoRepository } from '../../ports/produto/produto.repository';
 export class CriarProdutoUseCase {
   constructor(
     @Inject('IProdutoRepository')
-    private readonly produtoRepositoryInMemory: IProdutoRepository,
+    private readonly produtoRepository: IProdutoRepository,
   ) {}
 
   async execute(criarProdutoDTO: CriarProdutoDTO): Promise<ProdutoDTO> {
-    const produto =
-      await this.produtoRepositoryInMemory.buscarProdutoPorDescricao(
-        criarProdutoDTO.descricao,
-      );
+    const produto = await this.produtoRepository.buscarProdutoPorDescricao(
+      criarProdutoDTO.descricao,
+    );
 
     if (produto) {
       throw new ConflictError('Produto já cadastrado com essa descrição');
@@ -35,6 +34,6 @@ export class CriarProdutoUseCase {
       throw new BadRequestError(message);
     }
 
-    return this.produtoRepositoryInMemory.criarProduto(criarProdutoDTO);
+    return this.produtoRepository.criarProduto(criarProdutoDTO);
   }
 }

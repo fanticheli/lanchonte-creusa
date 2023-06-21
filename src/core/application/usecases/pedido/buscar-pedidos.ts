@@ -6,10 +6,10 @@ import { IPedidoRepository } from '../../ports/pedido/pedido.repository';
 export class BuscarPedidosUseCase {
   constructor(
     @Inject('IPedidoRepository')
-    private readonly pedidoRepositoryInMemory: IPedidoRepository,
+    private readonly pedidoRepository: IPedidoRepository,
   ) {}
 
   async execute(): Promise<PedidoDTO[]> {
-    return this.pedidoRepositoryInMemory.listarPedidos();
+    return this.pedidoRepository.listarPedidos();
   }
 }

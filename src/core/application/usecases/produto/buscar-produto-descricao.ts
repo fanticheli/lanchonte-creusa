@@ -7,12 +7,13 @@ import { IProdutoRepository } from '../../ports/produto/produto.repository';
 export class BuscarProdutoPorDescricaoUseCase {
   constructor(
     @Inject('IProdutoRepository')
-    private readonly produtoRepositoryInMemory: IProdutoRepository,
+    private readonly produtoRepository: IProdutoRepository,
   ) {}
 
   async execute(descricao: string): Promise<ProdutoDTO> {
-    const produto =
-      await this.produtoRepositoryInMemory.buscarProdutoPorDescricao(descricao);
+    const produto = await this.produtoRepository.buscarProdutoPorDescricao(
+      descricao,
+    );
 
     if (!produto) {
       throw new BadRequestError('Produto não encontrado');

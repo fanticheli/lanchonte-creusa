@@ -6,16 +6,16 @@ import { IProdutoRepository } from '../../ports/produto/produto.repository';
 export class DeletarProdutoUseCase {
   constructor(
     @Inject('IProdutoRepository')
-    private readonly produtoRepositoryInMemory: IProdutoRepository,
+    private readonly produtoRepository: IProdutoRepository,
   ) {}
 
   execute(id: string): void {
-    const produto = this.produtoRepositoryInMemory.buscarProdutoPorID(id);
+    const produto = this.produtoRepository.buscarProdutoPorID(id);
 
     if (!produto) {
       throw new BadRequestError('Produto não encontrado');
     }
 
-    this.produtoRepositoryInMemory.deletarProduto(id);
+    this.produtoRepository.deletarProduto(id);
   }
 }

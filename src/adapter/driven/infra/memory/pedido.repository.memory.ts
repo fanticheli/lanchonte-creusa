@@ -1,15 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { IPedidoRepository } from '../../../../core/application/ports/pedido/pedido.repository';
-import { IProdutoRepository } from '../../../../core/application/ports/produto/produto.repository';
 import { PedidoDTO } from '../../../../core/domain/pedido/dto/pedidoDTO';
 import { Pedido } from '../../../../core/domain/pedido/pedido';
 
 @Injectable()
 export class PedidoRepositoryInMemory implements IPedidoRepository {
-  constructor(
-    @Inject('IProdutoRepository')
-    private readonly produtoRepositoryInMemory: IProdutoRepository,
-  ) {}
   private pedidos: Pedido[] = [];
 
   async criarPedido(pedido: Pedido): Promise<PedidoDTO> {

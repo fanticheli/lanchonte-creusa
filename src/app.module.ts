@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { config } from 'dotenv';
 import { ClienteController } from './adapter/driver/controllers/cliente.controller';
 import { CriarClienteUseCase } from './core/application/usecases/cliente/criar-cliente';
 import { BuscarClientePorCPFUseCase } from './core/application/usecases/cliente/buscar-cliente-cpf';
 import { ProdutoController } from './adapter/driver/controllers/produto.controller';
-import { ProdutoRepositoryInMemory } from './adapter/driven/infra/memory/produto.respository.memory';
 import { CriarProdutoUseCase } from './core/application/usecases/produto/criar-produto';
 import { BuscarProdutoPorDescricaoUseCase } from './core/application/usecases/produto/buscar-produto-descricao';
 import { BuscarProdutoPorCategoriaUseCase } from './core/application/usecases/produto/buscar-produto-categoria';
@@ -14,12 +12,16 @@ import { DeletarProdutoUseCase } from './core/application/usecases/produto/delet
 import { CriarPedidoUseCase } from './core/application/usecases/pedido/criar-pedido';
 import { PedidoController } from './adapter/driver/controllers/pedido.controller';
 import { BuscarPedidosUseCase } from './core/application/usecases/pedido/buscar-pedidos';
-import { PedidoRepositoryInMemory } from './adapter/driven/infra/memory/pedido.repository.memory';
 import { ClienteRepositoryInMongo } from './adapter/driven/infra/mongo/repositories/cliente.repository.mongo';
 import { Cliente } from './core/domain/cliente/cliente';
 import { ClienteMongoSchema } from './adapter/driven/infra/mongo/model/cliente';
-
-config();
+import { ConfigModule } from '@nestjs/config';
+import { Produto } from './core/domain/produto/produto';
+import { ProdutoMongoSchema } from './adapter/driven/infra/mongo/model/produto';
+import { ProdutoRepositoryInMongo } from './adapter/driven/infra/mongo/repositories/produto.repository.mongo';
+import { Pedido } from './core/domain/pedido/pedido';
+import { PedidoMongoSchema } from './adapter/driven/infra/mongo/model/pedido';
+import { PedidoRepositoryInMongo } from './adapter/driven/infra/mongo/repositories/pedido.repository.mongo';
 
 const useCases = [
   CriarClienteUseCase,
@@ -35,12 +37,14 @@ const useCases = [
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      process.env.MONGO_URI ||
-        'mongodb://localhost:27017/lanchonete-creusa-dev',
-    ),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_URI, {
+      autoCreate: true,
+    }),
     MongooseModule.forFeature([
       { name: Cliente.name, schema: ClienteMongoSchema },
+      { name: Produto.name, schema: ProdutoMongoSchema },
+      { name: Pedido.name, schema: PedidoMongoSchema },
     ]),
   ],
   controllers: [ClienteController, ProdutoController, PedidoController],
@@ -52,11 +56,11 @@ const useCases = [
     },
     {
       provide: 'IPedidoRepository',
-      useClass: PedidoRepositoryInMemory,
+      useClass: PedidoRepositoryInMongo,
     },
     {
       provide: 'IProdutoRepository',
-      useClass: ProdutoRepositoryInMemory,
+      useClass: ProdutoRepositoryInMongo,
     },
   ],
 })

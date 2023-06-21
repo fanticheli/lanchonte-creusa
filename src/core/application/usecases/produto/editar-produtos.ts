@@ -10,11 +10,11 @@ import { IProdutoRepository } from '../../ports/produto/produto.repository';
 export class EditarProdutoUseCase {
   constructor(
     @Inject('IProdutoRepository')
-    private readonly produtoRepositoryInMemory: IProdutoRepository,
+    private readonly produtoRepository: IProdutoRepository,
   ) {}
 
   async execute(editarProdutoDTO: EditarProdutoDTO): Promise<ProdutoDTO> {
-    const produto = await this.produtoRepositoryInMemory.buscarProdutoPorID(
+    const produto = await this.produtoRepository.buscarProdutoPorID(
       editarProdutoDTO.id,
     );
 
@@ -33,6 +33,6 @@ export class EditarProdutoUseCase {
       throw new BadRequestError(message);
     }
 
-    return this.produtoRepositoryInMemory.editarProduto(novoProduto);
+    return this.produtoRepository.editarProduto(novoProduto);
   }
 }
