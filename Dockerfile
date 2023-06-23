@@ -1,12 +1,13 @@
-# Dockerfile
-FROM node:14-alpine
+FROM node:latest
 
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install
+WORKDIR /usr/src/api
 
 COPY . .
 
-CMD ["npm", "run", "start:prod"]
+RUN npm install --quiet --no-optional --no-fund --loglevel=error
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "start:prod" ]
