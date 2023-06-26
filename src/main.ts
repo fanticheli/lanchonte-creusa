@@ -5,6 +5,7 @@ import {
   BadRequestInterceptor,
   ConflictInterceptor,
 } from './common/errors/interceptors';
+import { setupSwagger } from '../swagger';
 
 async function bootstrap() {
   config();
@@ -14,6 +15,7 @@ async function bootstrap() {
     new ConflictInterceptor(),
     new BadRequestInterceptor(),
   );
+  setupSwagger(app);
   await app.listen(3000);
 }
 bootstrap();
