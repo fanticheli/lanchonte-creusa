@@ -7,7 +7,7 @@
     - Navegue até a raiz do projeto no seu computador
 
 #Passo 3
-    - Rode a seguinte lida de comando: docker-compose up
+    - Rode a seguinte linha de comando: docker-compose up
 
 
 ## Documentação DDD
